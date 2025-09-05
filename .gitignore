@@ -1,0 +1,13 @@
+# Arduino build and VS Code files
+*.hex
+*.elf
+*.bin
+*.eep
+*.dmp
+*.map
+*.srec
+*.log
+*.pyc
+__pycache__/
+.vscode/
+.DS_Store

@@ -1,0 +1,37 @@
+/*
+  Wiring Diagram for Physics Lab Arduino Car
+  
+  ARDUINO UNO CONNECTIONS:
+  
+  Motor Driver (L298N):
+  - Pin 5  → ENA (Left Motor Speed Control)
+  - Pin 6  → IN1 (Left Motor Direction)
+  - Pin 9  → ENB (Right Motor Speed Control) 
+  - Pin 10 → IN2 (Right Motor Direction)
+  - Pin 7  → IN3 (Left Motor Direction)
+  - Pin 4  → IN4 (Right Motor Direction)
+  
+  Note: Adjust pin assignments based on your specific motor driver shield
+  
+  IR Receiver (VS1838B):
+  - Pin 11 → Signal
+  - 5V     → VCC
+  - GND    → GND
+  
+  Buzzer:
+  - Pin 8  → Positive
+  - GND    → Negative
+  
+  LED (Status Indicator):
+  - Pin 13 → Built-in LED (no external wiring needed)
+  
+  Power:
+  - Motor Driver: Connect to external battery pack (6-12V)
+  - Arduino: Can be powered via USB or battery pack through Vin
+  
+  MOTOR CONNECTIONS TO L298N:
+  - Left Motor:  OUT1 and OUT2
+  - Right Motor: OUT3 and OUT4
+  
+  IMPORTANT: Ensure common ground between Arduino and motor driver!
+*/
