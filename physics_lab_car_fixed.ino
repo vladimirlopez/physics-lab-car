@@ -118,7 +118,19 @@ void loop() {
       unsigned long elapsed = millis() - markDetectedMillis;
       digitalWrite(STATUS_LED, HIGH); // Solid during reversing
       if (elapsed <= REVERSE_DURATION_MS && elapsed <= AFTER_MARK_TIMEOUT_MS) {
-        reverse(SPEED_REVERSE, SPEED_REVERSE);
+        // Experimental reverse line tracking: sensors still face forward, so steering is inverted.
+        // Goal: keep middle sensor over black (LOW). Adjust by biasing opposite wheel speeds.
+        if (middle == LOW) {
+          reverse(SPEED_REVERSE, SPEED_REVERSE);
+        } else if (left == LOW) {
+          // Line is under left sensor: car likely drifted left; while reversing we slow left wheel to pivot back over line.
+          reverse(SPEED_REVERSE - (SPEED_TURN_DELTA/2), SPEED_REVERSE);
+        } else if (right == LOW) {
+          reverse(SPEED_REVERSE, SPEED_REVERSE - (SPEED_TURN_DELTA/2));
+        } else {
+          // Lost line (all HIGH) - gentle stop to avoid wandering blindly.
+            stopMotors();
+        }
       } else {
         stopMotors();
         runState = HALT;
