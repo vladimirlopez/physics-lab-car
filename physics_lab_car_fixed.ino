@@ -130,7 +130,17 @@ void loop() {
       // Slow blink: on 500ms, off 500ms (approx 1s period)
       digitalWrite(STATUS_LED, (millis() / 500) % 2 ? HIGH : LOW);
       if (elapsed <= AFTER_MARK_TIMEOUT_MS) {
-        forward(SPEED_SLOW, SPEED_SLOW);
+        // Continue line following but with reduced speed & gentler corrections
+        if (middle == LOW) {
+          forward(SPEED_SLOW, SPEED_SLOW);
+        } else if (left == LOW) {
+          forward(SPEED_SLOW - (SPEED_TURN_DELTA/2), SPEED_SLOW);
+        } else if (right == LOW) {
+          forward(SPEED_SLOW, SPEED_SLOW - (SPEED_TURN_DELTA/2));
+        } else {
+          // Lost line during slow phase: stop to avoid wandering
+          stopMotors();
+        }
       } else {
         stopMotors();
         digitalWrite(STATUS_LED, LOW);
